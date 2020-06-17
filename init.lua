@@ -1,3 +1,27 @@
+local secrets = require 'secrets';
+
+print("Hello Konrad :)");
+
+print("Setting up WiFi to Station mode.");
+wifi.setmode(wifi.STATION);
+
+print("Setting configuration object for WiFi connection");
+print(secrets.ID);
+print(secrets.PASS);
+station_cfg = {};
+station_cfg.ssid = secrets.ID;
+station_cfg.pwd = secrets.PASS;
+
+function showip(params) print("Connected to Wifi. Got IP: " .. params.IP); end
+function connected(params) print("Connected to Wifi."); end
+
+station_cfg.connected_cb = connected;
+station_cfg.got_ip_cb = showip;
+
+print("Connection Status");
+print(wifi.sta.status())
+print("Connecting to WiFi");
+wifi.sta.config(station_cfg);
 ------------------------------------------------------------------------------
 -- HTTP server Hello world example
 --
